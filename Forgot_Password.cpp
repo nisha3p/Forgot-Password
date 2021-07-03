@@ -137,7 +137,9 @@ int Ret_Pass(int id)
     }
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), output_color);
 
-    string U_Name="Temp_Username", Pass="Temp_Password"; //Temp - Replace with SQL var
+
+    string Server="Server", U_Name="Temp_Username", Pass="Temp_Password"; //Temp - Replace with SQL var
+    cout<<"\n\tServer: "<<Server;
     cout << "\n\t\tUsername: "<<U_Name;
     cout << "\n\t\tPassword: "<<Pass;
 

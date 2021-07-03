@@ -85,7 +85,7 @@ int Add_New_Pass(int id)
     char Ans;
     cout << "\n\n\t Search for another answer (Y/N): ";
     cin >> Ans;
-    while (Ans != 'y' || Ans != 'Y' || Ans != 'n' || Ans != 'N')
+    while (Ans != 'y' && Ans != 'Y' && Ans != 'n' && Ans != 'N')
     {
         cout << "\n\tInvalid Answer, Please try again!";
         cout << "\n\n\t Search for another answer (Y/N): ";
@@ -144,7 +144,7 @@ int Ret_Pass(int id)
     char Ans;
     cout<<"\n\n\t Search for another answer (Y/N): ";
     cin>>Ans;
-    while(Ans!='y'||Ans!='Y'||Ans!='n'||Ans!='N')
+    while(Ans!='y'&&Ans!='Y'&&Ans!='n'&&Ans!='N')
     {
         cout<<"\n\tInvalid Answer, Please try again!";
         cout << "\n\n\t Search for another answer (Y/N): ";

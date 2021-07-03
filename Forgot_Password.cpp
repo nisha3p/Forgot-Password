@@ -11,12 +11,12 @@ int Entry()
     int id;
     int i;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 60);
-    for (i = 0; i < 73; i++)
+    for (i = 0; i < 150; i++)
     {
         printf("-");
     }
-    printf(" Forgot Password ");
-    for (i = 0; i < 73; i++)
+    printf(" \nForgot Password \n");
+    for (i = 0; i < 150; i++)
     {
         printf("-");
     }
@@ -108,12 +108,12 @@ int Ret_Pass(int id)
     int i;
     /*Retrieve Password*/
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), heading_color);
-    for (i = 0; i < 73; i++)
+    for (i = 0; i <150; i++)
     {
         printf("-");
     }
-    printf(" Retrieve Password ");
-    for (i = 0; i < 73; i++)
+    printf("\n Retrieve Password \n");
+    for (i = 0; i < 150; i++)
     {
         printf("-");
     }
@@ -166,8 +166,7 @@ int Ret_Pass(int id)
 
 int main()
 {
-    
-    int id; //Temp - Replace with SQL var
+    int id=0;
     int choice;
     id=Entry();
     choice=Home(id);

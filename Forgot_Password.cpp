@@ -3,6 +3,8 @@
 #include <fstream>
 #include<string.h>
 #include<bits/stdc++.h>
+#include<conio.h>
+#include<stdio.h>
 
 using namespace std;
 int heading_color=4;
@@ -25,14 +27,14 @@ int Entry()
 {
     int id=0;
     int i;
-    clrscr();
+    system("CLS");
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 116);
-    for (i = 0; i < 73; i++)
+    for (i = 0; i < 91; i++)
     {
         printf("-");
     }
-    printf(" Forgot Password ");
-    for (i = 0; i < 73; i++)
+    printf(" FORGOT PASSWORD ");
+    for (i = 0; i < 91; i++)
     {
         printf("-");
     }
@@ -99,9 +101,10 @@ int CheckEntry()
 
 int Home(int id)
 {
+    system("CLS");
     int i;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), heading_color);
-    for (i = 0; i < 150; i++)
+    for (i = 0; i < 200; i++)
     {
         printf("*");
     }
@@ -121,14 +124,17 @@ int Home(int id)
 int Add_New_Pass(int id)
 {
     int i;
+    system("CLS");
     /*Add New Password*/
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
-    for (i = 0; i < 170; i++)
+    for (i = 0; i < 200; i++)
     {
         printf("-");
     }
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3);
     printf("\n Add New Password \n");
-    for (i = 0; i < 170; i++)
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+    for (i = 0; i < 200; i++)
     {
         printf("-");
     }
@@ -143,11 +149,11 @@ int Add_New_Pass(int id)
     /*Trial*/
     ofstream file;
     file.open(un + "Credentials" + ".txt", ios_base::app);
-    file << Service << endl
-         << U_Name << endl
-         << Pass <<endl;
+    file << Service << "/t"
+         << U_Name << "/t"
+         << Pass <<"/t";
+    file<<"/n";
     file.close();
-    cout<<"\n\tS="<<Service<<" U="<<U_Name<<" P="<<Pass;
     char Ans;
     cout << "\n\n\t Do you want to add another service? (Y/N): ";
     cin >> Ans;
@@ -174,32 +180,45 @@ int Ret_Pass(int id)
     int i;
     /*Retrieve Password*/
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
-    for (i = 0; i <170; i++)
+    for (i = 0; i <200; i++)
     {
         printf("-");
     }
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3);
     printf("\n Retrieve Password \n");
-    for (i = 0; i < 170; i++)
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+    for (i = 0; i <200; i++)
     {
         printf("-");
     }
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), output_color);
 
     /* Print Table*/
-    cout<<"\n\tTable will be printed here\n";
+    cout<<"\n\tYour Passwords: \n";
+    int count=1;
+    string line;
+    ifstream red(un+"Credentials" + ".txt");
+    while(!red.eof()){
+        getline(red, line);
+        cout<<"\t"<<count<<"\t"<<line<<endl;
+        count++;
+    }
     
-    searching:
+    // getline(read, pw);
+
+    // ifstream file;
+    // file.open(un+"Credentials"+".txt");
+    // file.
+    // file.close();
+
+   /* searching:
     cout<<"\n\tEnter the Serial Number here: ";
     int serial_no;
     string serve,uname,pass;
     cin>>serial_no;
 
-    /*Search from The table*/
-    //ncout<<"\n\tHere it will search the serial No. from the table and show:\n";
-    ifstream read(un+"Credentials"+".txt");
-    getline(read, serve);
-    getline(read, uname);
-    getline(read, pass);
+    Search from The table
+    ncout<<"\n\tHere it will search the serial No. from the table and show:\n";*/
 
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), heading_color);
     for (i = 0; i < 150; i++)
@@ -209,12 +228,8 @@ int Ret_Pass(int id)
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), output_color);
 
     //string Server="Server", U_Name="Temp_Username", Pass="Temp_Password"; //Temp - Replace with SQL var
-    cout<<"\n\tServer: "<<serve;
-    cout << "\n\t\tUsername: "<<uname;
-    cout << "\n\t\tPassword: "<<pass;
-
     char Ans;
-    cout<<"\n\n\tDo you want to search for another Service (Y/N): ";
+    cout<<"\n\n\tDo you want to add another Service (Y/N): ";
     cin>>Ans;
     while(Ans!='y'&&Ans!='Y'&&Ans!='n'&&Ans!='N')
     {
@@ -224,7 +239,7 @@ int Ret_Pass(int id)
     }
     if(Ans=='y'||Ans=='Y')
     {
-        goto searching;
+        Add_New_Pass(id);
     }
     else if(Ans=='n'||Ans=='N')
     {

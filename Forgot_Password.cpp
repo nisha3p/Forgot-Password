@@ -1,72 +1,120 @@
-#include <iostream>
-#include <windows.h>
-#include <string.h>
+#include<iostream>
+#include<windows.h>
 #include <fstream>
+#include<string.h>
+#include<bits/stdc++.h>
+#include<conio.h>
+#include<stdio.h>
+
 using namespace std;
-int heading_color = 4;
-int output_color = 6;
-int default_color = 7;
+int heading_color=4;
+int output_color=6;
+int default_color=7;
+
+/* List of All the Functions*/
+int Entry();
+bool IsLoggedIn();
+int CheckEntry();
+int Home(int);
+int Add_New_Pass(int);
+int Ret_Pass(int);
+
+/*Main Username and Password*/
+string Name, PassCode;
+string un, pw;
+
+int Entry()
+{
+    int id=0;
+    int i;
+    system("CLS");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 116);
+    for (i = 0; i < 91; i++)
+    {
+        printf("-");
+    }
+    printf(" FORGOT PASSWORD ");
+    for (i = 0; i < 91; i++)
+    {
+        printf("-");
+    }
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), output_color);
+    CheckEntry();
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), default_color);
+    return id;
+}
 
 bool IsLoggedIn()
 {
-    string username, password, un, pw;
     cout << "Enter Username: ";
-    cin >> username;
+    cin >> Name;
     cout << "Enter Password: ";
-    cin >> password;
-    ifstream read(username + ".txt");
+    cin >> PassCode;
+    ifstream read(Name + ".txt");
     getline(read, un);
     getline(read, pw);
-    if (un == username && pw == password)
+    if (un == Name && pw == PassCode)
         return true;
     else
         return false;
 }
 
-int Entry()
+int CheckEntry()
 {
-    int id;
-    int i;
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 60);
-    for (i = 0; i < 150; i++)
+    int ans;
+    cout<<"\n\tSelect:\n\t1 - Login\n\t2 - SignUp\n\t";
+    cin>>ans;
+    while(ans!=1&&ans!=2)
     {
-        printf("-");
+        cout<<"Invalid Choice, Please select again.\n";
+        cin>>ans;
     }
-    printf(" \nForgot Password \n");
-    for (i = 0; i < 150; i++)
+    if(ans==1)
     {
-        printf("-");
+        bool status = IsLoggedIn();
+        if (!status)
+        {
+            cout << "Invalid Login Details, Please Try again." << endl;
+            CheckEntry();
+        }
+        else
+        {
+            cout << "Successfully logged in!" << endl;
+            system("PAUSE");
+        }
     }
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), output_color);
-
-    string Name, Pass; /*Temp*/
-    printf("\n\tName (In All Caps):");
-    cin >> Name;
-    printf("\n\tPassword:");
-    cin >> Pass;
-
-    id = 1; /*Temp*/
-
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), default_color);
-    return id;
+    else
+    {
+        cout << "Set a Username: ";
+        cin >> Name;
+        cout << "Set a Password: ";
+        cin >> PassCode;
+        ofstream file;
+        file.open(Name +".txt");
+        file << Name << endl
+             << PassCode;
+        file.close();
+        CheckEntry();
+    }
+    return 0;
 }
 
 int Home(int id)
 {
+    system("CLS");
     int i;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), heading_color);
-    for (i = 0; i < 150; i++)
+    for (i = 0; i < 200; i++)
     {
         printf("*");
     }
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), output_color);
-    printf("\n\tSelect:\n\t1 - Add new entry\n\t2 - Retrieve Password\n\t3 - Exit\n\t");
-aa:
     int choice;
-    cin >> choice;
-    while (choice > 3 || choice < 1)
+    printf("\n\tSelect:\n\t1 - Add new entry\n\t2 - Retrieve Password\n\t3 - Exit\n\t");
+    cin>>choice;
+    while(choice>3||choice<1)
     {
-        cout << "Invalid input, please try again\n";
+        cout<<"Invalid input, please try again\n";
         cin >> choice;
     }
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), default_color);
@@ -76,41 +124,48 @@ aa:
 int Add_New_Pass(int id)
 {
     int i;
+    system("CLS");
     /*Add New Password*/
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), heading_color);
-    for (i = 0; i < 73; i++)
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+    for (i = 0; i < 200; i++)
     {
         printf("-");
     }
-    printf(" Add New Password ");
-    for (i = 0; i < 73; i++)
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3);
+    printf("\n Add New Password \n");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+    for (i = 0; i < 200; i++)
     {
         printf("-");
     }
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), output_color);
     string Service, U_Name, Pass; //Temp - Replace with SQL var
-    cout << "\n\n\tService: ";
-    cin >> Service;
+    cout<<"\n\n\tService: ";
+    cin>>Service;
     cout << "\n\tUsername: ";
-    cin >> U_Name;
+    cin>>U_Name;
     cout << "\n\tPassword: ";
-    cin >> Pass;
+    cin >> Pass;   
     /*Trial*/
-    cout << "\n\tS=" << Service << " U=" << U_Name << " P=" << Pass;
-
-adding:
+    ofstream file;
+    file.open(un + "Credentials" + ".txt", ios_base::app);
+    file << Service << "/t"
+         << U_Name << "/t"
+         << Pass <<"/t";
+    file<<"/n";
+    file.close();
     char Ans;
-    cout << "\n\n\t Search for another answer (Y/N): ";
+    cout << "\n\n\t Do you want to add another service? (Y/N): ";
     cin >> Ans;
     while (Ans != 'y' && Ans != 'Y' && Ans != 'n' && Ans != 'N')
     {
-        cout << "\n\tInvalid Answer, Please try again!";
-        cout << "\n\n\t Search for another answer (Y/N): ";
+        cout << "\n\tInvalid Service Name, Please try again!";
+        cout << "\n\n\tDo you want to add another service? (Y/N): ";
         cin >> Ans;
     }
     if (Ans == 'y' || Ans == 'Y')
     {
-        goto adding;
+        Add_New_Pass(id);
     }
     else if (Ans == 'n' || Ans == 'N')
     {
@@ -124,28 +179,46 @@ int Ret_Pass(int id)
 {
     int i;
     /*Retrieve Password*/
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), heading_color);
-    for (i = 0; i < 150; i++)
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+    for (i = 0; i <200; i++)
     {
         printf("-");
     }
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3);
     printf("\n Retrieve Password \n");
-    for (i = 0; i < 150; i++)
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+    for (i = 0; i <200; i++)
     {
         printf("-");
     }
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), output_color);
 
     /* Print Table*/
-    cout << "\n\tTable will be printed here\n";
+    cout<<"\n\tYour Passwords: \n";
+    int count=1;
+    string line;
+    ifstream red(un+"Credentials" + ".txt");
+    while(!red.eof()){
+        getline(red, line);
+        cout<<"\t"<<count<<"\t"<<line<<endl;
+        count++;
+    }
+    
+    // getline(read, pw);
 
-searching:
-    cout << "\n\tEnter the Serial Number here: ";
+    // ifstream file;
+    // file.open(un+"Credentials"+".txt");
+    // file.
+    // file.close();
+
+   /* searching:
+    cout<<"\n\tEnter the Serial Number here: ";
     int serial_no;
-    cin >> serial_no;
+    string serve,uname,pass;
+    cin>>serial_no;
 
-    /*Search from The table*/
-    cout << "\n\tHere it will search the serial No. from the table and show:\n";
+    Search from The table
+    ncout<<"\n\tHere it will search the serial No. from the table and show:\n";*/
 
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), heading_color);
     for (i = 0; i < 150; i++)
@@ -154,25 +227,21 @@ searching:
     }
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), output_color);
 
-    string Server = "Server", U_Name = "Temp_Username", Pass = "Temp_Password"; //Temp - Replace with SQL var
-    cout << "\n\tServer: " << Server;
-    cout << "\n\t\tUsername: " << U_Name;
-    cout << "\n\t\tPassword: " << Pass;
-
+    //string Server="Server", U_Name="Temp_Username", Pass="Temp_Password"; //Temp - Replace with SQL var
     char Ans;
-    cout << "\n\n\t Search for another answer (Y/N): ";
-    cin >> Ans;
-    while (Ans != 'y' && Ans != 'Y' && Ans != 'n' && Ans != 'N')
+    cout<<"\n\n\tDo you want to add another Service (Y/N): ";
+    cin>>Ans;
+    while(Ans!='y'&&Ans!='Y'&&Ans!='n'&&Ans!='N')
     {
-        cout << "\n\tInvalid Answer, Please try again!";
-        cout << "\n\n\t Search for another answer (Y/N): ";
+        cout<<"\n\tInvalid Service Name, Please try again!";
+        cout << "\n\n\t Search for another Service (Y/N): ";
         cin >> Ans;
     }
-    if (Ans == 'y' || Ans == 'Y')
+    if(Ans=='y'||Ans=='Y')
     {
-        goto searching;
+        Add_New_Pass(id);
     }
-    else if (Ans == 'n' || Ans == 'N')
+    else if(Ans=='n'||Ans=='N')
     {
         Home(id);
     }
@@ -182,45 +251,15 @@ searching:
 
 int main()
 {
-    int id = 0;
-    int choice, login;
-    cout << "1: Register\n2: Login\nYour Choice: ";
-    cin >> login;
-    if (login == 1)
-    {
-        string username, password;
-        cout << "select a username: ";
-        cin >> username;
-        cout << "select a password: ";
-        cin >> password;
-        ofstream file;
-        file.open(username + ".txt");
-        file << username << endl
-             << password;
-        file.close();
-        main();
-    }
-    else if (login == 2)
-    {
-        bool status = IsLoggedIn();
-        if (!status)
-        {
-            cout << "False Login Details!" << endl;
-            main();
-        }
-        else
-        {
-            cout << "Successfully logged in!" << endl;
-            system("PAUSE");
-        }
-    }
-    id = Entry();
-    choice = Home(id);
-    if (choice == 1)
+    int id;
+    int choice;
+    id=Entry();
+    choice=Home(id);
+    if(choice==1)
     {
         Add_New_Pass(id);
     }
-    else if (choice == 2)
+    else if(choice==2)
     {
         Ret_Pass(id);
     }
@@ -228,6 +267,6 @@ int main()
     {
         goto exit;
     }
-exit:
+    exit:
     return 0;
 }
